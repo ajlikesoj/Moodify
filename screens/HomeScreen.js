@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 
 export default function HomeScreen({ navigation }) {
@@ -7,14 +7,18 @@ export default function HomeScreen({ navigation }) {
 
   const generatePlaylist = async () => {
     try {
+      // Send the user's mood/keyword to the backend
       const response = await axios.post(
-        "http://localhost:3000/generate-playlist",
-        { mood }
+        "http://192.168.1.72:3001/generatePlaylist",
+        { keywords: mood }
       );
-      const playlist = response.data;
+      const playlist = response.data.tracks;
+
+      // Navigate to PlaylistScreen with the playlist data
       navigation.navigate("Playlist", { playlist });
     } catch (error) {
       console.error("Error generating playlist:", error);
+      Alert.alert("Error", "Unable to generate playlist. Please try again.");
     }
   };
 

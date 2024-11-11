@@ -4,8 +4,10 @@ import { View, Text, StyleSheet } from "react-native";
 export default function SongItem({ song }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.songTitle}>{song.title}</Text>
-      <Text style={styles.artist}>{song.artist}</Text>
+      <Text style={styles.songTitle}>{song.name}</Text>
+      <Text style={styles.artist}>
+        {song.artists.map((artist) => artist.name).join(", ")}
+      </Text>
     </View>
   );
 }
