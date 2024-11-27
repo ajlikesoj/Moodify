@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+  const { userId } = route.params; // Pass userId from the login screen
   const [mood, setMood] = useState("");
 
   const generatePlaylist = async () => {
     try {
-      // Send the user's mood/keyword to the backend
+      // Replace YOUR_SERVER_URL with the actual URL of your backend
       const response = await axios.post(
-        "http://192.168.1.72:3001/generatePlaylist",
+        `http:////192.168.0.208:3001/generatePlaylist?userId=${userId}`,
         { keywords: mood }
       );
-      const playlist = response.data.tracks;
 
-      // Navigate to PlaylistScreen with the playlist data
+      const playlist = response.data.tracks;
       navigation.navigate("Playlist", { playlist });
     } catch (error) {
       console.error("Error generating playlist:", error);
